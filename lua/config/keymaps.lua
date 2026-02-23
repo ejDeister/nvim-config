@@ -39,6 +39,8 @@ map('n', '<leader>bd', '<cmd>bp | bd #<cr>', opts)
 map('n', '<leader>bD', '<cmd>bp | bn #<cr>', opts)
 map('n', '<leader>tabc', '<cmd>tabc<cr>', opts)
 map('n', '<leader>tabe', '<cmd>tabe %<cr>', opts)
+map('n', '<leader>tabo', '<cmd>tabonly<cr>', opts)
+map('n', '<leader>bufo', '<cmd>%bd|e#|bd#<cr>', opts)
 
 
 -- bufferline
@@ -77,6 +79,35 @@ map('n', '<leader>hl', '<cmd>HopLine<cr>', opts)
 
 
 -- git
-map('n', '<leader>gdif', '<cmd>Gvdiffsplit HEAD~1:%<cr>', opts)
+map('n', '<leader>gdif', '<cmd>Gdiffsplit HEAD<cr>', opts)
+map('n', '<leader>gvdif', '<cmd>Gvdiffsplit HEAD<cr>', opts)
 map('n', '<leader>gcoms', '<cmd>Telescope git_commits<cr>', opts)
 map('n', '<leader>gbcoms', '<cmd>Telescope git_bcommits<cr>', opts)
+
+map('n', '<leader>gdifall', function()
+  local pattern = vim.fn.input('Diff files matching (lua regex): ')
+  if pattern == '' then return end
+
+  local files = vim.fn.systemlist('git diff --name-only HEAD')
+  if vim.v.shell_error ~= 0 then
+    vim.notify('Failed to run git diff', vim.log.levels.ERROR)
+    return
+  end
+
+  local matched = {}
+  for _, file in ipairs(files) do
+    if file:match(pattern) then
+      matched[#matched + 1] = file
+    end
+  end
+
+  if #matched == 0 then
+    vim.notify('No modified files matched: ' .. pattern, vim.log.levels.WARN)
+    return
+  end
+
+  for _, file in ipairs(matched) do
+    vim.cmd('tabedit ' .. vim.fn.fnameescape(file))
+    vim.cmd('Gvdiffsplit HEAD')
+  end
+end, vim.tbl_extend('force', opts, { desc = 'Gvdiffsplit HEAD for modified files matching regex' }))
