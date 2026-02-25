@@ -30,12 +30,13 @@ map('n', '<leader>tslg', '<cmd>Telescope live_grep<cr>', opts)
 
 
 -- ui
-map('n', '<C-\\>a', '<cmd>ToggleTerm 1<cr>', opts)
-map('t', '<C-\\>a', '<cmd>ToggleTerm 1<cr>', opts)
-map('n', '<C-\\>b', '<cmd>ToggleTerm 2<cr>', opts)
-map('t', '<C-\\>b', '<cmd>ToggleTerm 2<cr>', opts)
-map('n', '<C-\\>c', '<cmd>ToggleTerm 3<cr>', opts)
-map('t', '<C-\\>c', '<cmd>ToggleTerm 3<cr>', opts)
+local toggleTerm = require('config.utils').toggleTerminal
+map('n', '<C-\\>a', toggleTerm(1), opts)
+map('t', '<C-\\>a', toggleTerm(1), opts)
+map('n', '<C-\\>b', toggleTerm(2), opts)
+map('t', '<C-\\>b', toggleTerm(2), opts)
+map('n', '<C-\\>c', toggleTerm(3), opts)
+map('t', '<C-\\>c', toggleTerm(3), opts)
 
 map('n', '<leader>w', '<C-w>', opts)
 map('n', '<leader>x', '<cmd>bd<cr>', opts)
