@@ -92,11 +92,18 @@ map('n', '<leader>gdifall', function()
   local pattern = vim.fn.input('Diff files matching (lua regex): ')
   if pattern == '' then return end
 
-  local files = vim.fn.systemlist('git diff --name-only HEAD')
-  if vim.v.shell_error ~= 0 then
-    vim.notify('Failed to run git diff', vim.log.levels.ERROR)
+  local git_root = vim.fn.FugitiveWorkTree()
+  if git_root == '' then
+    vim.notify('Not in a git repo', vim.log.levels.ERROR)
     return
   end
+
+  local output = vim.fn.system('git -C ' .. vim.fn.shellescape(git_root) .. ' diff --name-only HEAD')
+  if vim.v.shell_error ~= 0 then
+    vim.notify('Failed to run git diff: ' .. output, vim.log.levels.ERROR)
+    return
+  end
+  local files = vim.split(output, '\n', { trimempty = true })
 
   local matched = {}
   for _, file in ipairs(files) do
@@ -111,7 +118,7 @@ map('n', '<leader>gdifall', function()
   end
 
   for _, file in ipairs(matched) do
-    vim.cmd('tabedit ' .. vim.fn.fnameescape(file))
+    vim.cmd('tabedit ' .. vim.fn.fnameescape(git_root .. '/' .. file))
     vim.cmd('Gvdiffsplit HEAD')
   end
 end, vim.tbl_extend('force', opts, { desc = 'Gvdiffsplit HEAD for modified files matching regex' }))
