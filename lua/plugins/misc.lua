@@ -3,16 +3,18 @@ return {
   {
     'nvim-treesitter/nvim-treesitter',
     config = function()
-      require('nvim-treesitter').install({
-        'lua',
-        'javascript',
-        'typescript',
-        'html',
-        'css',
-        'json',
-        'bash',
-        'go',
-        'python'
+      require('nvim-treesitter').setup({
+        ensure_installed = {
+          'lua',
+          'javascript',
+          'typescript',
+          'html',
+          'css',
+          'json',
+          'bash',
+          'go',
+          'python'
+        },
       })
     end,
     build = ':TSUpdate'
@@ -25,7 +27,8 @@ return {
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
-      'L3M0N4D3/LuaSnip'
+      'L3M0N4D3/LuaSnip',
+      'saadparwaiz1/cmp_luasnip'
     },
     config = function()
       local cmp = require('cmp')
@@ -41,6 +44,24 @@ return {
         mapping = cmp.mapping.preset.insert({
           ['<C-Space>'] = cmp.mapping.complete(),
           ['<CR>'] = cmp.mapping.confirm({ select = true }),
+          ['<Tab>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_next_item()
+            elseif luasnip.expand_or_jumpable() then
+              luasnip.expand_or_jump()
+            else
+              fallback()
+            end
+          end, { 'i', 's' }),
+          ['<S-Tab>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then
+              luasnip.jump(-1)
+            else
+              fallback()
+            end
+          end, { 'i', 's' }),
         }),
 
         sources = cmp.config.sources({
@@ -56,6 +77,7 @@ return {
   -- LuaSnip
   {
     'L3MON4D3/LuaSnip',
+    dependencies = { 'rafamadriz/friendly-snippets' },
     config = function()
       local luasnip = require('luasnip')
       require('luasnip.loaders.from_vscode').lazy_load()
@@ -74,8 +96,4 @@ return {
     end,
     dependencies = { 'nvim-tree/nvim-web-devicons' }
   },
-
-  -- Misc
-  { 'rafamadriz/friendly-snippets' },
-  { 'hrsh7th/cmp-nvim-lsp' },
 }

@@ -10,7 +10,7 @@ return {
     dependencies = { 'williamboman/mason.nvim' },
     config = function()
       require('mason-lspconfig').setup({
-        ensure_installed = { 'pyright', 'ts_ls', 'gopls', 'lua_ls' },
+        ensure_installed = { 'pyright', 'ts_ls', 'gopls', 'lua_ls', 'html', 'emmet' },
       })
     end
   },

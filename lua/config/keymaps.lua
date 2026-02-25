@@ -30,13 +30,17 @@ map('n', '<leader>tslg', '<cmd>Telescope live_grep<cr>', opts)
 
 
 -- ui
-map('n', '<C-\\>', function() require('toggleterm').toggle() end, opts)
-map('t', '<C-\\>', function() require('toggleterm').toggle() end, opts)
+map('n', '<C-\\>a', '<cmd>ToggleTerm 1<cr>', opts)
+map('t', '<C-\\>a', '<cmd>ToggleTerm 1<cr>', opts)
+map('n', '<C-\\>b', '<cmd>ToggleTerm 2<cr>', opts)
+map('t', '<C-\\>b', '<cmd>ToggleTerm 2<cr>', opts)
+map('n', '<C-\\>c', '<cmd>ToggleTerm 3<cr>', opts)
+map('t', '<C-\\>c', '<cmd>ToggleTerm 3<cr>', opts)
 
 map('n', '<leader>w', '<C-w>', opts)
 map('n', '<leader>x', '<cmd>bd<cr>', opts)
 map('n', '<leader>bd', '<cmd>bp | bd #<cr>', opts)
-map('n', '<leader>bD', '<cmd>bp | bn #<cr>', opts)
+map('n', '<leader>bD', '<cmd>bn | bd #<cr>', opts)
 map('n', '<leader>tabc', '<cmd>tabc<cr>', opts)
 map('n', '<leader>tabe', '<cmd>tabe %<cr>', opts)
 map('n', '<leader>tabo', '<cmd>tabonly<cr>', opts)
@@ -68,9 +72,9 @@ map('n', '<leader>lsca', buf.code_action, opts)
 map('n', '<leader>dx', '<cmd>normal <C-w>d<cr>', opts)
 
 
--- neotree
-map('n', '<leader>fet', '<cmd>Neotree toggle<cr>', opts)
-map('n', '<leader>fef', '<cmd>Neotree action=focus<cr>', opts)
+-- oil
+map('n', '<leader>fet', '<cmd>lua require("oil").toggle_float()<cr>', opts)
+map('n', '<leader>fef', '<cmd>Oil<cr>', opts)
 
 
 -- hop

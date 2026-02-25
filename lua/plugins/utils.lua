@@ -36,13 +36,4 @@ return {
   -- misc
   { 'tpope/vim-surround' },
   { 'mbbill/undotree' },
-
-  -- emmet
-  {
-    'mattn/emmet-vim',
-    ft = { 'html', 'css', 'javascriptreact', 'typescriptreact', 'vue', 'svelte' },
-    init = function()
-      vim.g.user_emmet_leader_key = '<C-e>'
-    end,
-  },
 } 
