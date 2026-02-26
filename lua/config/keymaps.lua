@@ -74,9 +74,9 @@ map('n', '<leader>dx', '<cmd>normal <C-w>d<cr>', opts)
 
 
 -- oil
-map('n', '<leader>fet', '<cmd>lua require("oil").toggle_float()<cr>', opts)
-map('n', '<leader>fef', '<cmd>Oil<cr>', opts)
-
+map('n', '<leader>fet', function() require('oil').toggle_float() end, opts)
+map('n', '<leader>fes', function() require('config.utils').savePathToRegister() end, opts)
+map('n', '<leader>fer', function() require('config.utils').toggleRegisterFloat() end, opts)
 
 -- hop
 map('n', '<leader>hw', '<cmd>HopWord<cr>', opts)
