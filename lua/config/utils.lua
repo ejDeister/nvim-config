@@ -4,8 +4,11 @@ local function toggleTerminal(number)
   return function()
     require('plugins.utils')
     local git_root = vim.fn.FugitiveWorkTree()
+    local oil_dir = require('oil').get_current_dir()
     local dir = vim.fn.expand('%:p:h')
-    local term_dir = (git_root ~= '' and git_root) or (dir ~= '' and dir) or nil
+    if dir:match('^%a+://') then dir = '' end
+
+    local term_dir = (git_root ~= '' and git_root) or (oil_dir ~= '' and oil_dir) or (dir ~= '' and dir) or vim.fn.getcwd()
 
     require('toggleterm.terminal').Terminal:new({
       dir = term_dir,
@@ -38,7 +41,7 @@ local function savePathToRegister()
 end
 M.savePathToRegister = savePathToRegister
 
-local function openRegisterFloat()
+local function toggleRegisterFloat()
   local reg = getRegister()
   if reg then
     local oil = require('oil')
@@ -58,6 +61,28 @@ local function openRegisterFloat()
     vim.noftify('caneled registry fetch')
   end
 end
-M.openRegisterFloat = openRegisterFloat
+M.toggleRegisterFloat = toggleRegisterFloat
+
+local function scoot(key)
+  local percent = tonumber(vim.fn.input('Percentage scoot (0-100)'))
+  if key == 'H' then
+    local colsToScoot = math.floor(vim.o.columns * percent / 100)
+    vim.cmd('vertical resize -' .. vim.o.columns)
+    vim.cmd('vertical resize +' .. colsToScoot)
+  elseif key == 'L' then
+    local colsToScoot = math.floor(vim.o.columns * percent / 100)
+    vim.cmd('vertical resize +' .. vim.o.columns)
+    vim.cmd('vertical resize -' .. colsToScoot)
+  elseif key == 'J' then
+    local linesToScoot = math.floor(vim.o.lines * percent / 100)
+    vim.cmd('resize -' .. vim.o.columns)
+    vim.cmd('resize +' .. linesToScoot)
+  elseif key == 'K' then
+    local linesToScoot = math.floor(vim.o.lines * percent / 100)
+    vim.cmd('resize +' .. vim.o.columns)
+    vim.cmd('resize -' .. linesToScoot)
+  end
+end
+M.scoot = scoot
 
 return M

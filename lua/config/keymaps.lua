@@ -3,6 +3,7 @@ vim.g.maplocalleader = ' '
 
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
+local utils = require('config.utils')
 
 
 -- vim
@@ -30,7 +31,7 @@ map('n', '<leader>tslg', '<cmd>Telescope live_grep<cr>', opts)
 
 
 -- ui
-local toggleTerm = require('config.utils').toggleTerminal
+local toggleTerm = utils.toggleTerminal
 map('n', '<C-\\>a', toggleTerm(1), opts)
 map('t', '<C-\\>a', toggleTerm(1), opts)
 map('n', '<C-\\>b', toggleTerm(2), opts)
@@ -47,6 +48,10 @@ map('n', '<leader>tabe', '<cmd>tabe %<cr>', opts)
 map('n', '<leader>tabo', '<cmd>tabonly<cr>', opts)
 map('n', '<leader>bufo', '<cmd>%bd|e#|bd#<cr>', opts)
 
+map('n', '<leader>H', function() utils.scoot('H') end, opts)
+map('n', '<leader>J', function() utils.scoot('J') end, opts)
+map('n', '<leader>K', function() utils.scoot('K') end, opts)
+map('n', '<leader>L', function() utils.scoot('L') end, opts)
 
 -- bufferline
 map('n', '<Tab>', '<cmd>BufferLineCycleNext<cr>', opts)
@@ -75,8 +80,8 @@ map('n', '<leader>dx', '<cmd>normal <C-w>d<cr>', opts)
 
 -- oil
 map('n', '<leader>fet', function() require('oil').toggle_float() end, opts)
-map('n', '<leader>fes', function() require('config.utils').savePathToRegister() end, opts)
-map('n', '<leader>fer', function() require('config.utils').toggleRegisterFloat() end, opts)
+map('n', '<leader>fes', function() utils.savePathToRegister() end, opts)
+map('n', '<leader>fer', function() utils.toggleRegisterFloat() end, opts)
 
 -- hop
 map('n', '<leader>hw', '<cmd>HopWord<cr>', opts)
