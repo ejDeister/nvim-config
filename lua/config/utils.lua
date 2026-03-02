@@ -62,4 +62,35 @@ local function openRegisterFloat()
 end
 M.openRegisterFloat = openRegisterFloat
 
+-- QuickFix Tabs
+local function quickFixTabs(tabs)
+  local items = {}
+  local tabmap = {}
+
+  local api = vim.api
+  for i, tab in ipairs(tabs) do
+    local win = api.nvim_tabpage_get_win(tab)
+    local buf = api.nvim_win_get_buf(win)
+    local name = api.nvim_buf_get_name(buf)
+    if name == '' then name = '[No Name]' end
+
+    local short = vim.fn.fnamemodify(name,':~:.')
+    local modified = api.nvim_buf_get_option(buf,'modified') and '[+]' or ''
+    local text = string.format('tab %d %s %s', i, modified, short)
+
+    table.insert(items, {
+      filename = name,
+      lnum = 1,
+      col = 1,
+      text = text,
+    })
+    table.insert(tabmap, {
+      tabnr = i,
+      tabpage = tab,
+    })
+  end
+
+  return items, tabmap
+end
+
 return M
