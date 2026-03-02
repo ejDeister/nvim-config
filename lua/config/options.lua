@@ -24,7 +24,7 @@ opt.splitbelow = true
 opt.scrolloff = 5
 
 opt.updatetime = 250
-opt.timeoutlen = 500
+opt.timeout = false
 
 opt.clipboard = 'unnamedplus'
 
