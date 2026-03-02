@@ -1,6 +1,6 @@
 local M = {}
 
-local function toggleTerminal(number)
+M.toggleTerminal = function(number)
   return function()
     require('plugins.utils')
     local git_root = vim.fn.FugitiveWorkTree()
@@ -16,7 +16,6 @@ local function toggleTerminal(number)
     }):toggle()
   end
 end
-M.toggleTerminal = toggleTerminal
 
 local path_registers = {}
 local active_path = nil
@@ -63,7 +62,7 @@ local function toggleRegisterFloat()
 end
 M.toggleRegisterFloat = toggleRegisterFloat
 
-local function scoot(key)
+M.scoot = function(key)
   local percent = tonumber(vim.fn.input('Percentage scoot (0-100)'))
   if key == 'H' then
     local colsToScoot = math.floor(vim.o.columns * percent / 100)
@@ -83,6 +82,53 @@ local function scoot(key)
     vim.cmd('resize -' .. linesToScoot)
   end
 end
-M.scoot = scoot
+
+M.gdifall = function()
+  local pattern = vim.fn.input('Diff files matching (lua regex, empty = all): ')
+
+  local git_root = vim.fn.FugitiveWorkTree()
+  if git_root == '' then
+    vim.notify('Not in a git repo', vim.log.levels.ERROR)
+    return
+  end
+
+  local commitOne = vim.fn.input('Base commit (empty = HEAD): ')
+  local commitTwo = ''
+  if commitOne ~= '' then
+    commitTwo = vim.fn.input('Target commit (empty = working tree): ')
+  end
+
+  local base = commitOne ~= '' and commitOne or 'HEAD'
+  local diff_args = commitTwo ~= '' and (base .. ' ' .. commitTwo) or base
+
+  local output = vim.fn.system('git -C ' .. vim.fn.shellescape(git_root) .. ' diff --name-only ' .. diff_args)
+  if vim.v.shell_error ~= 0 then
+    vim.notify('Failed to run git diff: ' .. output, vim.log.levels.ERROR)
+    return
+  end
+
+  local files = vim.split(output, '\n', { trimempty = true })
+  local matched = {}
+  for _, file in ipairs(files) do
+    if pattern == '' or file:match(pattern) then
+      matched[#matched + 1] = file
+    end
+  end
+
+  if #matched == 0 then
+    vim.notify('No modified files matched', vim.log.levels.WARN)
+    return
+  end
+
+  for _, file in ipairs(matched) do
+    if commitTwo ~= '' then
+      vim.cmd('tabnew')
+      vim.cmd('Gedit ' .. commitTwo .. ':' .. vim.fn.fnameescape(file))
+    else
+      vim.cmd('tabedit ' .. vim.fn.fnameescape(git_root .. '/' .. file))
+    end
+    vim.cmd('Gvdiffsplit ' .. base)
+  end
+end
 
 return M
