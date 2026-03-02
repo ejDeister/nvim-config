@@ -1,10 +1,17 @@
+local opts = { noremap = true, silent = true }
+
+vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', opts)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-local map = vim.keymap.set
-local opts = { noremap = true, silent = true }
 local utils = require('config.utils')
 
+local function map(mode, lhs, rhs, desc)
+  vim.keymap.set(mode,lhs,rhs, {
+    noremap = true,
+    silent = true,
+  })
+end
 
 -- vim
 local reloadKeymaps = function()
@@ -20,7 +27,7 @@ local restoreSession = function()
   vim.cmd('silent! source ~/.local/state/nvim/sessions/default-session.vim')
 end
 map('n', '<leader>sess', restoreSession, opts)
-map('n', '<leader>tlb', '<cmd>normal zMzv999[zzRzt<cr>', opts)
+map('n', '<leader>tlf', '<cmd>normal zMzv999[zzRzt<cr>', opts)
 
 
 -- telescope

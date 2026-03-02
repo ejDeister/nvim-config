@@ -2,22 +2,24 @@ return {
   -- treesitter
   {
     'nvim-treesitter/nvim-treesitter',
-    config = function()
-      require('nvim-treesitter').setup({
-        ensure_installed = {
-          'lua',
-          'javascript',
-          'typescript',
-          'html',
-          'css',
-          'json',
-          'bash',
-          'go',
-          'python'
-        },
-      })
+    lazy = false,
+    build = function()
+      local parsers = {
+        'javascript',
+        'typescript',
+        'jsx',
+        'tsx',
+        'html',
+        'css',
+        'python',
+        'json',
+        'lua',
+      }
+      require('nvim-treesitter').install(parsers):wait()
     end,
-    build = ':TSUpdate'
+    config = function()
+      require('nvim-treesitter').setup()
+    end,
   },
 
   -- cmp

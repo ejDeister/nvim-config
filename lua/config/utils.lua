@@ -1,5 +1,6 @@
 local M = {}
 
+-- ToggleTerm
 M.toggleTerminal = function(number)
   return function()
     require('plugins.utils')
@@ -17,7 +18,6 @@ M.toggleTerminal = function(number)
   end
 end
 
-local path_registers = {}
 local active_path = nil
 local function getRegister()
   local char = vim.fn.getcharstr()
@@ -26,25 +26,27 @@ local function getRegister()
   return char
 end
 
-local function savePathToRegister()
+
+local oil_path_registers = {}
+local function savePathToOilRegister()
   local reg = getRegister()
   if reg then
     local oil = require('oil')
     local path
     path = oil.get_current_dir()
-    path_registers[reg] = path
+    oil_path_registers[reg] = path
     vim.notify('@' .. reg .. ' ← ' .. path, vim.log.levels.INFO)
   else
     vim.notify('canceled path registry')
   end
 end
-M.savePathToRegister = savePathToRegister
+M.savePathToOilRegister = savePathToOilRegister
 
 local function toggleRegisterFloat()
   local reg = getRegister()
   if reg then
     local oil = require('oil')
-    local path = path_registers[reg]
+    local path = oil_path_registers[reg]
     if active_path == nil then
       oil.toggle_float(path)
       active_path = path
