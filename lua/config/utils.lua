@@ -133,8 +133,6 @@ M.gdifall = function()
     vim.cmd('Gvdiffsplit ' .. base)
     table.insert(tabs, vim.api.nvim_get_current_tabpage())
   end
-  
-  M.quickFixTabs(tabs)
 end
 
 -- Deprecated, different approach will be taken to Git quickfixes
