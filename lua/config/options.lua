@@ -21,7 +21,7 @@ opt.hlsearch = false
 
 opt.splitright = true
 opt.splitbelow = true
-opt.scrolloff = 5
+opt.scrolloff = 2
 
 opt.updatetime = 250
 opt.timeout = false

@@ -4,6 +4,8 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', opts)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+local utils = require('config.utils')
+
 local function map(mode, lhs, rhs, desc)
   vim.keymap.set(mode,lhs,rhs, {
     noremap = true,
@@ -36,7 +38,7 @@ map('n', '<leader>tslg', '<cmd>Telescope live_grep<cr>', opts)
 
 
 -- ui
-local toggleTerm = require('config.utils').toggleTerminal
+local toggleTerm = utils.toggleTerminal
 map('n', '<C-\\>a', toggleTerm(1), opts)
 map('t', '<C-\\>a', toggleTerm(1), opts)
 map('n', '<C-\\>b', toggleTerm(2), opts)
@@ -53,6 +55,10 @@ map('n', '<leader>tabe', '<cmd>tabe %<cr>', opts)
 map('n', '<leader>tabo', '<cmd>tabonly<cr>', opts)
 map('n', '<leader>bufo', '<cmd>%bd|e#|bd#<cr>', opts)
 
+map('n', '<leader>H', function() utils.scoot('H') end, opts)
+map('n', '<leader>J', function() utils.scoot('J') end, opts)
+map('n', '<leader>K', function() utils.scoot('K') end, opts)
+map('n', '<leader>L', function() utils.scoot('L') end, opts)
 
 -- bufferline
 map('n', '<Tab>', '<cmd>BufferLineCycleNext<cr>', opts)
@@ -81,8 +87,8 @@ map('n', '<leader>dx', '<cmd>normal <C-w>d<cr>', opts)
 
 -- oil
 map('n', '<leader>fet', function() require('oil').toggle_float() end, opts)
-map('n', '<leader>fes', function() require('config.utils').savePathToOilRegister() end, opts)
-map('n', '<leader>fer', function() require('config.utils').openRegisterFloat() end, opts)
+map('n', '<leader>fes', function() utils.savePathToOilRegister() end, opts)
+map('n', '<leader>fer', function() utils.toggleRegisterFloat() end, opts)
 
 -- hop
 map('n', '<leader>hw', '<cmd>HopWord<cr>', opts)
@@ -95,37 +101,4 @@ map('n', '<leader>gvdif', '<cmd>Gvdiffsplit HEAD<cr>', opts)
 map('n', '<leader>gcoms', '<cmd>Telescope git_commits<cr>', opts)
 map('n', '<leader>gbcoms', '<cmd>Telescope git_bcommits<cr>', opts)
 
-map('n', '<leader>gdifall', function()
-  local pattern = vim.fn.input('Diff files matching (lua regex): ')
-  if pattern == '' then return end
-
-  local git_root = vim.fn.FugitiveWorkTree()
-  if git_root == '' then
-    vim.notify('Not in a git repo', vim.log.levels.ERROR)
-    return
-  end
-
-  local output = vim.fn.system('git -C ' .. vim.fn.shellescape(git_root) .. ' diff --name-only HEAD')
-  if vim.v.shell_error ~= 0 then
-    vim.notify('Failed to run git diff: ' .. output, vim.log.levels.ERROR)
-    return
-  end
-  local files = vim.split(output, '\n', { trimempty = true })
-
-  local matched = {}
-  for _, file in ipairs(files) do
-    if file:match(pattern) then
-      matched[#matched + 1] = file
-    end
-  end
-
-  if #matched == 0 then
-    vim.notify('No modified files matched: ' .. pattern, vim.log.levels.WARN)
-    return
-  end
-
-  for _, file in ipairs(matched) do
-    vim.cmd('tabedit ' .. vim.fn.fnameescape(git_root .. '/' .. file))
-    vim.cmd('Gvdiffsplit HEAD')
-  end
-end, vim.tbl_extend('force', opts, { desc = 'Gvdiffsplit HEAD for modified files matching regex' }))
+map('n', '<leader>gdifall', function() utils.gdifall() end, vim.tbl_extend('force', opts, { desc = 'Gvdiffsplit HEAD for modified files matching regex' }))
