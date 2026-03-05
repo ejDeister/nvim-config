@@ -41,12 +41,12 @@ map('n', '<leader>tskm', '<cmd>Telescope keymaps<cr>', opts.tskm)
 
 -- ui
 local toggleTerm = utils.toggleTerminal
-map('n', '<leader><C-\\>a', toggleTerm(1), opts.toggleTerm)
-map('t', '<leader><C-\\>a', toggleTerm(1), opts.toggleTerm)
-map('n', '<leader><C-\\>b', toggleTerm(2), opts.toggleTerm)
-map('t', '<leader><C-\\>b', toggleTerm(2), opts.toggleTerm)
-map('n', '<leader><C-\\>c', toggleTerm(3), opts.toggleTerm)
-map('t', '<leader><C-\\>c', toggleTerm(3), opts.toggleTerm)
+map('n', '<leader>\\a', toggleTerm(1), opts.toggleTerm)
+map('t', '<leader>\\a', toggleTerm(1), opts.toggleTerm)
+map('n', '<leader>\\b', toggleTerm(2), opts.toggleTerm)
+map('t', '<leader>\\b', toggleTerm(2), opts.toggleTerm)
+map('n', '<leader>\\c', toggleTerm(3), opts.toggleTerm)
+map('t', '<leader>\\c', toggleTerm(3), opts.toggleTerm)
 
 map('n', '<leader>w', '<C-w>', opts.ctrlw)
 map('n', '<leader>x', '<cmd>bd<cr>', opts.x)
@@ -100,9 +100,10 @@ map('n', '<leader>hl', '<cmd>HopLine<cr>', opts.hl)
 
 
 -- git
+map('n', '<leader>gnc', function() utils.gitNextChange() end, opts.gnc)
+map('n', '<leader>gnp', function() utils.gitPrevChange() end, opts.gpc)
 map('n', '<leader>gdif', '<cmd>Gdiffsplit HEAD<cr>', opts.gdif)
 map('n', '<leader>gvdif', '<cmd>Gvdiffsplit HEAD<cr>', opts.gvdif)
 map('n', '<leader>gcoms', '<cmd>Telescope git_commits<cr>', opts.gcoms)
 map('n', '<leader>gbcoms', '<cmd>Telescope git_bcommits<cr>', opts.gbcoms)
-
 map('n', '<leader>gdifall', function() utils.gdifall() end, opts.gdifall)

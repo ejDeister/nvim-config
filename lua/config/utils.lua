@@ -145,6 +145,16 @@ M.invertColorscheme = function()
   vim.cmd.colorscheme('vscode')
 end
 
+M.gitNextChange = function ()
+  if vim.wo.diff then vim.cmd('normal! ]c')
+  else require('gitsigns').next_hunk() end
+end
+
+M.gitPrevChange = function ()
+  if vim.wo.diff then vim.cmd('normal! [c')
+  else require('gitsigns').prev_hunk() end
+end
+
 -- Deprecated, different approach will be taken to Git quickfixes
 -- -- QuickFix Tabs
 -- M.quickFixTabs = function(tabs)

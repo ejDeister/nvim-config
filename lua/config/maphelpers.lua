@@ -61,6 +61,8 @@ M.hw = 'HopWord | Type the character(s) on the screen to jump to that word'
 M.hl = 'HopLine | Type the character(s) on the screen to jump to that line'
 
 -- Git
+M.gnc = 'Git Next Change | Go to next change in CWT current buffer'
+M.gpc = 'Git Previous Change | Go to previous change in CWT current buffer'
 M.gdif = 'Git Diff | :Gdiffsplit HEAD | Open diff between CWT and HEAD for current buffer'
 M.gvdif = 'Git Vertical Diff | :Gvdiffsplit HEAD | Open vertical diff between CWT and HEAD for current buffer'
 M.gcoms = 'Git Commits | :Telescope git_commits | Search commits for current branch with Telescope'
