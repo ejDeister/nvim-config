@@ -14,3 +14,5 @@ vim.opt.rtp:prepend(lazypath)
 
 require('config')
 require('lazy').setup(require('plugins'))
+-- note that telescope currently does ff and lg based on nvim . directory (cwd)
+-- probably a larger scale issue? maybe just fix with a keybind + oil
