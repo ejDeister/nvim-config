@@ -1,13 +1,15 @@
-local opts = { noremap = true, silent = true }
+local opts = require('config.maphelpers')
 
-vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', opts)
+vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', opts.default)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 local function map(mode, lhs, rhs, desc)
+  desc = desc or 'Description not provided.'
   vim.keymap.set(mode,lhs,rhs, {
     noremap = true,
     silent = true,
+    desc = desc,
   })
 end
 
@@ -17,83 +19,83 @@ local reloadKeymaps = function()
   require('config.keymaps')
   print('Keymaps reloaded!')
 end
-map('n', '<leader>kmr', reloadKeymaps, opts)
+map('n', '<leader>kmr', reloadKeymaps, opts.kmr)
 
 local restoreSession = function()
   vim.cmd('tabonly')
   vim.cmd('%bd!')
   vim.cmd('silent! source ~/.local/state/nvim/sessions/default-session.vim')
 end
-map('n', '<leader>sess', restoreSession, opts)
-map('n', '<leader>tlf', '<cmd>normal zMzv999[zzRzt<cr>', opts)
+map('n', '<leader>sess', restoreSession, opts.sess)
+map('n', '<leader>tlf', '<cmd>normal zMzv999[zzRzt<cr>', opts.tlf)
 
 
 -- telescope
-map('n', '<leader>tsff', '<cmd>Telescope find_files<cr>', opts)
-map('n', '<leader>tsb', '<cmd>Telescope buffers<cr>', opts)
-map('n', '<leader>tsws', '<cmd>Telescope lsp_dynamic_workspace_symbols<cr>', opts)
-map('n', '<leader>tslg', '<cmd>Telescope live_grep<cr>', opts)
-
+map('n', '<leader>tsff', '<cmd>Telescope find_files<cr>', opts.tsff)
+map('n', '<leader>tsb', '<cmd>Telescope buffers<cr>', opts.tsb)
+map('n', '<leader>tsws', '<cmd>Telescope lsp_dynamic_workspace_symbols<cr>', opts.tsws)
+map('n', '<leader>tslg', '<cmd>Telescope live_grep<cr>', opts.tslg)
+map('n', '<leader>tskm', '<cmd>Telescope keymaps<cr>', opts.tskm)
 
 -- ui
 local toggleTerm = require('config.utils').toggleTerminal
-map('n', '<C-\\>a', toggleTerm(1), opts)
-map('t', '<C-\\>a', toggleTerm(1), opts)
-map('n', '<C-\\>b', toggleTerm(2), opts)
-map('t', '<C-\\>b', toggleTerm(2), opts)
-map('n', '<C-\\>c', toggleTerm(3), opts)
-map('t', '<C-\\>c', toggleTerm(3), opts)
+map('n', '<C-\\>a', toggleTerm(1), opts.toggleTerm)
+map('t', '<C-\\>a', toggleTerm(1), opts.toggleTerm)
+map('n', '<C-\\>b', toggleTerm(2), opts.toggleTerm)
+map('t', '<C-\\>b', toggleTerm(2), opts.toggleTerm)
+map('n', '<C-\\>c', toggleTerm(3), opts.toggleTerm)
+map('t', '<C-\\>c', toggleTerm(3), opts.toggleTerm)
 
-map('n', '<leader>w', '<C-w>', opts)
-map('n', '<leader>x', '<cmd>bd<cr>', opts)
-map('n', '<leader>bd', '<cmd>bp | bd #<cr>', opts)
-map('n', '<leader>bD', '<cmd>bn | bd #<cr>', opts)
-map('n', '<leader>tabc', '<cmd>tabc<cr>', opts)
-map('n', '<leader>tabe', '<cmd>tabe %<cr>', opts)
-map('n', '<leader>tabo', '<cmd>tabonly<cr>', opts)
-map('n', '<leader>bufo', '<cmd>%bd|e#|bd#<cr>', opts)
+map('n', '<leader>w', '<C-w>', opts.ctrlw)
+map('n', '<leader>x', '<cmd>bd<cr>', opts.x)
+map('n', '<leader>bd', '<cmd>bp | bd #<cr>', opts.bd)
+map('n', '<leader>bD', '<cmd>bn | bd #<cr>', opts.bD)
+map('n', '<leader>tabc', '<cmd>tabc<cr>', opts.tabc)
+map('n', '<leader>tabe', '<cmd>tabe %<cr>', opts.tabe)
+map('n', '<leader>tabo', '<cmd>tabonly<cr>', opts.tabo)
+map('n', '<leader>bufo', '<cmd>%bd|e#|bd#<cr>', opts.bufo)
 
 
 -- bufferline
-map('n', '<Tab>', '<cmd>BufferLineCycleNext<cr>', opts)
-map('n', '<S-Tab>', '<cmd>BufferLineCyclePrev<cr>', opts)
-map('n', '<leader>blt', '<cmd>BufferlineTabs<cr>', opts)
-map('n', '<leader>blb', '<cmd>BufferlineBuffers<cr>', opts)
-map('n', '<leader>blp', '<cmd>BufferLinePick<cr>', opts)
-map('n', '<leader>blP', '<cmd>BufferLinePickClose<cr>', opts)
+map('n', '<Tab>', '<cmd>BufferLineCycleNext<cr>', opts.tab)
+map('n', '<S-Tab>', '<cmd>BufferLineCyclePrev<cr>', opts.stab)
+map('n', '<leader>blt', '<cmd>BufferlineTabs<cr>', opts.blt)
+map('n', '<leader>blb', '<cmd>BufferlineBuffers<cr>', opts.blb)
+map('n', '<leader>blp', '<cmd>BufferLinePick<cr>', opts.blp)
+map('n', '<leader>blP', '<cmd>BufferLinePickClose<cr>', opts.blP)
 
 
 -- lsp
 local buf = vim.lsp.buf
 
-map('n', 'gd', buf.definition, opts) 
-map('n', 'gD', buf.declaration, opts) 
-map('n', 'gt', buf.type_definition, opts) 
-map('n', 'gr', buf.references, opts) 
+map('n', 'gd', buf.definition, opts.gd)
+map('n', 'gD', buf.declaration, opts.gD)
+map('n', 'gt', buf.type_definition, opts.gt)
+map('n', 'gr', buf.references, opts.gr)
 
-map('n', '<leader>lshov', buf.hover, opts)
-map('n', '<leader>lssig', buf.signature_help, opts)
-map('n', '<leader>lsrn', buf.rename, opts)
-map('n', '<leader>lsca', buf.code_action, opts)
+map('n', '<leader>lshov', buf.hover, opts.lshov)
+map('n', '<leader>lssig', buf.signature_help, opts.lssig)
+map('n', '<leader>lsrn', buf.rename, opts.lsrn)
+map('n', '<leader>lsca', buf.code_action, opts.lsca)
 
-map('n', '<leader>dx', '<cmd>normal <C-w>d<cr>', opts)
+map('n', '<leader>dx', '<cmd>normal <C-w>d<cr>', opts.default)
 
 
 -- oil
-map('n', '<leader>fet', function() require('oil').toggle_float() end, opts)
-map('n', '<leader>fes', function() require('config.utils').savePathToOilRegister() end, opts)
-map('n', '<leader>fer', function() require('config.utils').toggleRegisterFloat() end, opts)
+map('n', '<leader>fet', function() require('oil').toggle_float() end, opts.fet)
+map('n', '<leader>fes', function() require('config.utils').savePathToOilRegister() end, opts.fes)
+map('n', '<leader>fer', function() require('config.utils').toggleRegisterFloat() end, opts.fer)
 
 -- hop
-map('n', '<leader>hw', '<cmd>HopWord<cr>', opts)
-map('n', '<leader>hl', '<cmd>HopLine<cr>', opts)
+map('n', '<leader>hw', '<cmd>HopWord<cr>', opts.hw)
+map('n', '<leader>hl', '<cmd>HopLine<cr>', opts.hl)
 
 
 -- git
-map('n', '<leader>gdif', '<cmd>Gdiffsplit HEAD<cr>', opts)
-map('n', '<leader>gvdif', '<cmd>Gvdiffsplit HEAD<cr>', opts)
-map('n', '<leader>gcoms', '<cmd>Telescope git_commits<cr>', opts)
-map('n', '<leader>gbcoms', '<cmd>Telescope git_bcommits<cr>', opts)
+map('n', '<leader>gdif', '<cmd>Gdiffsplit HEAD<cr>', opts.gdif)
+map('n', '<leader>gvdif', '<cmd>Gvdiffsplit HEAD<cr>', opts.gvdif)
+map('n', '<leader>gcoms', '<cmd>Telescope git_commits<cr>', opts.gcoms)
+map('n', '<leader>gbcoms', '<cmd>Telescope git_bcommits<cr>', opts.gbcoms)
 
 map('n', '<leader>gdifall', function()
   local pattern = vim.fn.input('Diff files matching (lua regex): ')

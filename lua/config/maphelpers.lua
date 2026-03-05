@@ -3,6 +3,7 @@ local M = {}
 local opts = { noremap = true, silent = true }
 
 -- General
+M.default = opts
 M.kmr = 'Key Map Reload - Refresh keymaps without reloading neovim.'
 M.sess = 'Session - Restore session from previous neovim instance.'
 M.tlf = 'Top Level Fold - Jump cursor top level of indentation.'
@@ -61,3 +62,5 @@ M.gvdif = ':Gvdiffsplit HEAD'
 M.gcoms = ':Telescope git_commits'
 M.gbcoms = ':Telescope git_bcommits'
 M.gdifall = 'Git Diff All - For each file matching regex, open a vertical diff in a new tab.'
+
+return M
