@@ -62,6 +62,8 @@ map('n', '<leader>J', function() utils.scoot('J') end, opts.scoot)
 map('n', '<leader>K', function() utils.scoot('K') end, opts.scoot)
 map('n', '<leader>L', function() utils.scoot('L') end, opts.scoot)
 
+map('n', '<leader>cst', function() utils.invertColorscheme() end, opts.cst)
+
 -- bufferline
 map('n', '<Tab>', '<cmd>BufferLineCycleNext<cr>', opts.tab)
 map('n', '<S-Tab>', '<cmd>BufferLineCyclePrev<cr>', opts.stab)

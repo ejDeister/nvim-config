@@ -65,7 +65,7 @@ end
 M.toggleRegisterFloat = toggleRegisterFloat
 
 M.scoot = function(key)
-  local percent = tonumber(vim.fn.input('Percentage scoot (0-100)'))
+  local percent = tonumber(vim.fn.input('Percentage scoot (0-100) '))
   if key == 'H' then
     local colsToScoot = math.floor(vim.o.columns * percent / 100)
     vim.cmd('vertical resize -' .. vim.o.columns)
@@ -133,6 +133,16 @@ M.gdifall = function()
     vim.cmd('Gvdiffsplit ' .. base)
     table.insert(tabs, vim.api.nvim_get_current_tabpage())
   end
+end
+
+-- Colorscheme
+M.invertColorscheme = function()
+  if vim.o.background == 'dark' then
+    vim.o.background = 'light'
+  else
+    vim.o.background = 'dark'
+  end
+  vim.cmd.colorscheme('vscode')
 end
 
 -- Deprecated, different approach will be taken to Git quickfixes
