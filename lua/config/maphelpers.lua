@@ -28,6 +28,8 @@ M.tabe = 'Tab Edit (current buffer)'
 M.tabo = 'Tab Only (close all except current)'
 M.bufo = 'Buffer Only (close all except current)'
 
+M.scoot = 'H|J|K|L, 0-100 | Scoot the current window by 0-100%'
+
 -- BufferLine
 M.tab = ':BufferLineCycleNext'
 M.stab = ':BufferLineCyclePrev'

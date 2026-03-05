@@ -41,12 +41,12 @@ map('n', '<leader>tskm', '<cmd>Telescope keymaps<cr>', opts.tskm)
 
 -- ui
 local toggleTerm = utils.toggleTerminal
-map('n', '<C-\\>a', toggleTerm(1), opts.toggleTerm)
-map('t', '<C-\\>a', toggleTerm(1), opts.toggleTerm)
-map('n', '<C-\\>b', toggleTerm(2), opts.toggleTerm)
-map('t', '<C-\\>b', toggleTerm(2), opts.toggleTerm)
-map('n', '<C-\\>c', toggleTerm(3), opts.toggleTerm)
-map('t', '<C-\\>c', toggleTerm(3), opts.toggleTerm)
+map('n', '<leader><C-\\>a', toggleTerm(1), opts.toggleTerm)
+map('t', '<leader><C-\\>a', toggleTerm(1), opts.toggleTerm)
+map('n', '<leader><C-\\>b', toggleTerm(2), opts.toggleTerm)
+map('t', '<leader><C-\\>b', toggleTerm(2), opts.toggleTerm)
+map('n', '<leader><C-\\>c', toggleTerm(3), opts.toggleTerm)
+map('t', '<leader><C-\\>c', toggleTerm(3), opts.toggleTerm)
 
 map('n', '<leader>w', '<C-w>', opts.ctrlw)
 map('n', '<leader>x', '<cmd>bd<cr>', opts.x)
@@ -57,10 +57,10 @@ map('n', '<leader>tabe', '<cmd>tabe %<cr>', opts.tabe)
 map('n', '<leader>tabo', '<cmd>tabonly<cr>', opts.tabo)
 map('n', '<leader>bufo', '<cmd>%bd|e#|bd#<cr>', opts.bufo)
 
-map('n', '<leader>H', function() utils.scoot('H') end, opts)
-map('n', '<leader>J', function() utils.scoot('J') end, opts)
-map('n', '<leader>K', function() utils.scoot('K') end, opts)
-map('n', '<leader>L', function() utils.scoot('L') end, opts)
+map('n', '<leader>H', function() utils.scoot('H') end, opts.scoot)
+map('n', '<leader>J', function() utils.scoot('J') end, opts.scoot)
+map('n', '<leader>K', function() utils.scoot('K') end, opts.scoot)
+map('n', '<leader>L', function() utils.scoot('L') end, opts.scoot)
 
 -- bufferline
 map('n', '<Tab>', '<cmd>BufferLineCycleNext<cr>', opts.tab)
@@ -74,10 +74,10 @@ map('n', '<leader>blP', '<cmd>BufferLinePickClose<cr>', opts.blP)
 -- lsp
 local buf = vim.lsp.buf
 
-map('n', 'gd', buf.definition, opts.gd)
-map('n', 'gD', buf.declaration, opts.gD)
-map('n', 'gt', buf.type_definition, opts.gt)
-map('n', 'gr', buf.references, opts.gr)
+map('n', '<leader>gd', buf.definition, opts.gd)
+map('n', '<leader>gD', buf.declaration, opts.gD)
+map('n', '<leader>gt', buf.type_definition, opts.gt)
+map('n', '<leader>gr', buf.references, opts.gr)
 
 map('n', '<leader>lshov', buf.hover, opts.lshov)
 map('n', '<leader>lssig', buf.signature_help, opts.lssig)
@@ -103,4 +103,4 @@ map('n', '<leader>gvdif', '<cmd>Gvdiffsplit HEAD<cr>', opts.gvdif)
 map('n', '<leader>gcoms', '<cmd>Telescope git_commits<cr>', opts.gcoms)
 map('n', '<leader>gbcoms', '<cmd>Telescope git_bcommits<cr>', opts.gbcoms)
 
-map('n', '<leader>gdifall', function() utils.gdifall() end, vim.tbl_extend('force', opts, { desc = 'Gvdiffsplit HEAD for modified files matching regex' }))
+map('n', '<leader>gdifall', function() utils.gdifall() end, opts.gdifall)
