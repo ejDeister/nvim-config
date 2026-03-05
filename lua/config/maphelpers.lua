@@ -1,8 +1,9 @@
 local M = {}
 
-local opts = { noremap = true, silent = true }
+M.opts = { noremap = true, silent = true }
 
 -- General
+M.default = 'No description provided.'
 M.kmr = 'Key Map Reload - Refresh keymaps without reloading neovim.'
 M.sess = 'Session - Restore session from previous neovim instance.'
 M.tlf = 'Top Level Fold - Jump cursor top level of indentation.'
@@ -26,6 +27,8 @@ M.tabc = 'Tab Close'
 M.tabe = 'Tab Edit (current buffer)'
 M.tabo = 'Tab Only (close all except current)'
 M.bufo = 'Buffer Only (close all except current)'
+
+M.scoot = 'H|J|K|L, 0-100 | Scoot the current window by 0-100%'
 
 -- BufferLine
 M.tab = ':BufferLineCycleNext'
@@ -61,3 +64,5 @@ M.gvdif = ':Gvdiffsplit HEAD'
 M.gcoms = ':Telescope git_commits'
 M.gbcoms = ':Telescope git_bcommits'
 M.gdifall = 'Git Diff All - For each file matching regex, open a vertical diff in a new tab.'
+
+return M
