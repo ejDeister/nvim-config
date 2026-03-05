@@ -101,7 +101,7 @@ map('n', '<leader>hl', '<cmd>HopLine<cr>', opts.hl)
 
 -- git
 map('n', '<leader>gnc', function() utils.gitNextChange() end, opts.gnc)
-map('n', '<leader>gnp', function() utils.gitPrevChange() end, opts.gpc)
+map('n', '<leader>gpc', function() utils.gitPrevChange() end, opts.gpc)
 map('n', '<leader>gdif', '<cmd>Gdiffsplit HEAD<cr>', opts.gdif)
 map('n', '<leader>gvdif', '<cmd>Gvdiffsplit HEAD<cr>', opts.gvdif)
 map('n', '<leader>gcoms', '<cmd>Telescope git_commits<cr>', opts.gcoms)
