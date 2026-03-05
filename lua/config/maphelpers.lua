@@ -1,9 +1,9 @@
 local M = {}
 
-local opts = { noremap = true, silent = true }
+M.opts = { noremap = true, silent = true }
 
 -- General
-M.default = opts
+M.default = 'No description provided.'
 M.kmr = 'Key Map Reload - Refresh keymaps without reloading neovim.'
 M.sess = 'Session - Restore session from previous neovim instance.'
 M.tlf = 'Top Level Fold - Jump cursor top level of indentation.'

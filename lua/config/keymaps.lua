@@ -1,6 +1,6 @@
 local opts = require('config.maphelpers')
 
-vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', opts.default)
+vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', opts.opts)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -78,7 +78,7 @@ map('n', '<leader>lssig', buf.signature_help, opts.lssig)
 map('n', '<leader>lsrn', buf.rename, opts.lsrn)
 map('n', '<leader>lsca', buf.code_action, opts.lsca)
 
-map('n', '<leader>dx', '<cmd>normal <C-w>d<cr>', opts.default)
+map('n', '<leader>dx', '<cmd>normal <C-w>d<cr>', opts.dx)
 
 
 -- oil
