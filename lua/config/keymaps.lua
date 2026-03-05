@@ -76,10 +76,10 @@ map('n', '<leader>blP', '<cmd>BufferLinePickClose<cr>', opts.blP)
 -- lsp
 local buf = vim.lsp.buf
 
-map('n', '<leader>gd', buf.definition, opts.gd)
-map('n', '<leader>gD', buf.declaration, opts.gD)
-map('n', '<leader>gt', buf.type_definition, opts.gt)
-map('n', '<leader>gr', buf.references, opts.gr)
+map('n', '<leader>lsgd', buf.definition, opts.gd)
+map('n', '<leader>lsgD', buf.declaration, opts.gD)
+map('n', '<leader>lsgt', buf.type_definition, opts.gt)
+map('n', '<leader>lsgr', buf.references, opts.gr)
 
 map('n', '<leader>lshov', buf.hover, opts.lshov)
 map('n', '<leader>lssig', buf.signature_help, opts.lssig)
