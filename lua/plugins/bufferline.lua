@@ -2,11 +2,7 @@ return {
   {
     'akinsho/bufferline.nvim',
     config = function()
-      require('bufferline').setup{
-        options = {
-          mode = 'tabs',
-        }
-      }
+      require('bufferline').setup{}
 
       -- Switch between tabpages vs. buffers
       vim.cmd([[command! BufferlineBuffers lua require('bufferline').setup({ options = { mode = 'buffers' } })]])
