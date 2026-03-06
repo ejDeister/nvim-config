@@ -16,7 +16,7 @@ M.tsws = 'TeleScope WorkSpace | Search workspace symbols'
 M.tslg = 'TeleScope Live Grep | Search CWD for regex /w grep'
 
 -- UI
-M.toggleTerm = 'ToggleTerm [register]'
+M.toggleTerm = 'ToggleTerm [register] | Toggle the floating Terminal with register as a or b or c'
 
 M.ctrlw = 'Ctrl + w'
 M.x = 'close buffer'
