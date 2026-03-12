@@ -14,6 +14,8 @@ return {
         'python',
         'json',
         'lua',
+        'markdown',
+        'markdown_inline',
       }
       require('nvim-treesitter').install(parsers):wait()
     end,
@@ -97,5 +99,35 @@ return {
       require('lualine').setup({options = { theme = 'auto' } })
     end,
     dependencies = { 'nvim-tree/nvim-web-devicons' }
+  },
+  -- obsidian
+  {
+    'epwalsh/obsidian.nvim',
+    version = '*',
+    lazy = true,
+    ft = 'markdown',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    opts = {
+      workspaces = {
+        {
+          name = 'obsidian_vault',
+          path = '~/Documents/notes/',
+        },
+        {
+          name = 'nvim_vault',
+          path = '~/Notes/',
+        },
+      },
+      ui = {
+        enable = false
+      },
+    },
+  },
+  -- render-markdown
+  {
+    'MeanderingProgrammer/render-markdown.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    ft = { 'markdown' },
+    opts = {},
   },
 }

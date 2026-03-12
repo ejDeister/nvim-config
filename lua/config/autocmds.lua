@@ -17,3 +17,11 @@ newAutoCmd('VimLeavePre', {
     vim.cmd('mksession!' .. vim.fn.fnameescape(sessFile))
   end,
 })
+
+newAutoCmd('FileType', {
+  pattern = 'markdown',
+  callback = function()
+    vim.opt_local.conceallevel = 2
+    vim.treesitter.start()
+  end,
+})
