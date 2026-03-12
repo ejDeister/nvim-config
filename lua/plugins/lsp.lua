@@ -10,7 +10,7 @@ return {
     dependencies = { 'williamboman/mason.nvim' },
     config = function()
       require('mason-lspconfig').setup({
-        ensure_installed = { 'pyright', 'ts_ls', 'lua_ls', 'html' },
+        ensure_installed = { 'pyright', 'ts_ls', 'lua_ls', 'html', 'emmet_language_server' },
       })
     end
   },
@@ -24,6 +24,11 @@ return {
         (cmp_nvim_lsp and cmp_nvim_lsp.default_capabilities() or {})
       )
       vim.lsp.config('*', { on_attach = on_attach, capabilities = capabilities })
+      vim.lsp.config('emmet_language_server', {
+        filetypes = { 'html', 'css', 'javascriptreact', 'typescriptreact', 'javascript', 'typescript' },
+        capabilities = capabilities,
+      })
+      vim.lsp.enable('emmet_language_server')
     end
   },
 }

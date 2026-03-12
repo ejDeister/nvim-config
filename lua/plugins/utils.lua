@@ -36,4 +36,5 @@ return {
   -- misc
   { 'tpope/vim-surround' },
   { 'mbbill/undotree' },
+  { 'mattn/emmet-vim' },
 } 
