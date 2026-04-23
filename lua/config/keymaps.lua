@@ -99,6 +99,10 @@ map('n', '<leader>hw', '<cmd>HopWord<cr>', opts.hw)
 map('n', '<leader>hl', '<cmd>HopLine<cr>', opts.hl)
 
 
+-- scratch pad
+map('n', '<leader>spt', function() utils.toggleScratchList() end, opts.spt)
+map('x', '<leader>spa', function() utils.addSelectionToScratch() end, opts.spa)
+
 -- git
 map('n', '<leader>gnc', function() utils.gitNextChange() end, opts.gnc)
 map('n', '<leader>gpc', function() utils.gitPrevChange() end, opts.gpc)

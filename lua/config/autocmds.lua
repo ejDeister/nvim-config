@@ -25,3 +25,10 @@ newAutoCmd('FileType', {
     vim.treesitter.start()
   end,
 })
+
+newAutoCmd('FileType', {
+  pattern = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact', 'html', 'css', 'python', 'json', 'lua' },
+  callback = function()
+    vim.treesitter.start()
+  end,
+})

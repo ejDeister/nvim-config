@@ -60,6 +60,10 @@ M.fer = "File Explorer Restore - Set Oil's CWD to given register's path"
 M.hw = 'HopWord | Type the character(s) on the screen to jump to that word'
 M.hl = 'HopLine | Type the character(s) on the screen to jump to that line'
 
+-- Scratch Pad
+M.spt = 'Scratch Pad Toggle | Toggle the scratch pad for the current working directory'
+M.spa = 'Scratch Pad Add | Add visually selected lines to the scratch pad'
+
 -- Git
 M.gnc = 'Git Next Change | Go to next change in CWT current buffer'
 M.gpc = 'Git Previous Change | Go to previous change in CWT current buffer'

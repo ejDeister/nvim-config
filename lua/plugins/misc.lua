@@ -20,7 +20,9 @@ return {
       require('nvim-treesitter').install(parsers):wait()
     end,
     config = function()
-      require('nvim-treesitter').setup()
+      require('nvim-treesitter').setup({
+        highlight = { enable = true },
+      })
     end,
   },
 

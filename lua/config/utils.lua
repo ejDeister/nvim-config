@@ -145,6 +145,74 @@ M.invertColorscheme = function()
   vim.cmd.colorscheme('vscode')
 end
 
+local scratch_dir = vim.fn.expand('~/.temp/nvim/scratch')
+
+local function scratch_path()
+  local cwd = vim.fn.getcwd()
+  local dirname = vim.fn.fnamemodify(cwd, ':t')
+  return scratch_dir .. '/' .. dirname .. '.md'
+end
+
+local function ensure_scratch()
+  vim.fn.mkdir(scratch_dir, 'p')
+  local path = scratch_path()
+  if vim.fn.filereadable(path) == 0 then
+    vim.fn.writefile({}, path)
+  end
+  return path
+end
+
+M.toggleScratchList = function()
+  local path = ensure_scratch()
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    local buf = vim.api.nvim_win_get_buf(win)
+    if vim.api.nvim_buf_get_name(buf) == path then
+      vim.api.nvim_win_close(win, false)
+      return
+    end
+  end
+  vim.cmd('botright 10split ' .. vim.fn.fnameescape(path))
+end
+
+M.addSelectionToScratch = function()
+  local buf = vim.api.nvim_get_current_buf()
+  local start_line = vim.fn.line("'<")
+  local end_line = vim.fn.line("'>")
+
+  local lines = {}
+  for lnum = start_line, end_line do
+    local text = vim.api.nvim_buf_get_lines(buf, lnum - 1, lnum, false)[1] or ''
+    table.insert(lines, text)
+  end
+
+  local path = ensure_scratch()
+  local existing = vim.fn.readfile(path)
+  vim.list_extend(existing, lines)
+  vim.fn.writefile(existing, path)
+
+  -- reload buffer if open
+  for _, b in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_get_name(b) == path then
+      vim.api.nvim_buf_call(b, function() vim.cmd('edit') end)
+      break
+    end
+  end
+
+  -- open if not already visible
+  local open = false
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    if vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(win)) == path then
+      open = true
+      break
+    end
+  end
+  if not open then
+    vim.cmd('botright 10split ' .. vim.fn.fnameescape(path))
+  end
+
+  vim.notify(#lines .. ' line(s) added to scratch list', vim.log.levels.INFO)
+end
+
 M.gitNextChange = function ()
   if vim.wo.diff then vim.cmd('normal! ]c')
   else require('gitsigns').next_hunk() end
