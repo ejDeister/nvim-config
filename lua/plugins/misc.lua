@@ -20,9 +20,7 @@ return {
       require('nvim-treesitter').install(parsers):wait()
     end,
     config = function()
-      require('nvim-treesitter').setup({
-        highlight = { enable = true },
-      })
+      require('nvim-treesitter').setup()
     end,
   },
 
@@ -49,7 +47,7 @@ return {
 
         mapping = cmp.mapping.preset.insert({
           ['<C-Space>'] = cmp.mapping.complete(),
-          ['<CR>'] = cmp.mapping.confirm({ select = true }),
+          ['<CR>'] = cmp.mapping.confirm({ select = false }),
           ['<Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
@@ -112,12 +110,8 @@ return {
     opts = {
       workspaces = {
         {
-          name = 'obsidian_vault',
-          path = '~/Documents/notes/',
-        },
-        {
           name = 'nvim_vault',
-          path = '~/Notes/',
+          path = '~/notes/',
         },
       },
       ui = {
