@@ -132,4 +132,26 @@ return {
     ft = { 'markdown' },
     opts = {},
   },
+  -- leetcode
+  {
+    "kawre/leetcode.nvim",
+    build = ":TSUpdate html",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+    },
+    opts = {
+      lang = "python3",
+    },
+  },
+  -- neo-scroll
+  {
+    "karb94/neoscroll.nvim",
+    config = function()
+      require("neoscroll").setup({
+        easing = "quadratic",
+        duration_multiplier = 0.75
+      })
+    end,
+  },
 }

@@ -23,7 +23,7 @@ opt.splitright = true
 opt.splitbelow = true
 opt.scrolloff = 2
 
-opt.updatetime = 250
+opt.updatetime = 20
 opt.timeout = false
 
 opt.clipboard = 'unnamedplus'
