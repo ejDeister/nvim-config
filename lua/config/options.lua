@@ -1,5 +1,8 @@
 local opt = vim.opt
 
+opt.exrc = true
+opt.secure = true
+
 opt.number = true
 opt.relativenumber = true
 opt.cursorline = true
