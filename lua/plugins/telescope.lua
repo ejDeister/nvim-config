@@ -9,6 +9,14 @@ return {
       local actions = require('telescope.actions')
 
       telescope.setup{
+        pickers = {
+          live_grep = {
+            hidden = true,
+          },
+          find_files = {
+            hidden = true,
+          },
+        },
         defaults = {
           mappings = {
             i = { ['<esc>'] = actions.close },
